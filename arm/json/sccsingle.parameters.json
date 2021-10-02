@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "value": "larry"
+        },
+        "adminPassword": {
+            "value": "Password123"
+        },
+        "virtualNetworks_scc_rg_vnet_name": {
+            "value": "scc-vnet"
+        },
+        "virtualMachines_scc_webapp_windows2019_name": {
+            "value": "scc-webapp"
+        },
+        "networkInterfaces_scc_webapp_windows20947_name": {
+            "value": "scc-webapp-windows20947"
+        },
+        "publicIPAddresses_scc_webapp_windows2019_ip_name": {
+            "value": "scc-webapp-windows2019-ip"
+        },
+        "networkSecurityGroups_scc_webapp_windows2019_nsg_name": {
+            "value": "scc-webapp-windows2019-nsg"
+        },
+        "schedules_shutdown_computevm_scc_webapp_windows2019_name": {
+            "value": "shutdown-computevm-scc-webapp-windows2019"
+        }
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appvmSku": {
+            "value": "Standard_NV6"
+        },
+        "encvmSku": {
+            "value": "Standard_NV6"
+        },
+        "vmssName": {
+            "value": "PSJsvDEM"
+        },
+        "virtualNetworkName": {
+            "value": "virtual network name"
+        },
+        "instanceCount": {
+            "value": 1
+        },
+        "singlePlacementGroup": {
+            "value": true
+        },
+        "adminUsername": {
+            "value": "username"
+        },
+        "adminPassword": {
+            "value": "password"
+        },
+        "location": {
+            "value": "EastUS"
+        },
+        "platformFaultDomainCount": {
+            "value": 1
+        },
+        "imageReferenceApp": {
+            "value": "VM image name"
+        },       
+        "imageReferenceEnc": {
+            "value": "VM image name"
+        },
+        "webComputerPrefix": {
+            "value": "demWEB"
+        },
+        "encComputerPrefix": {
+            "value": "demENC"
+        },
+        "domainToJoin": {
+            "value": "example.com"
+        },
+        "domainUsername": {
+            "value": "user@example.com"
+        },
+        "domainPassword": {
+            "value": "password for domain joining"
+        },        
+        "domainJoinOptions": {
+            "value": 3
+        },
+        "userAssignedIdentityResourceId": {
+            "value":"managed identity for retrieving key vault cert"
+        },
+        "ObservedCertificates": {
+            "value": "https://scctestkeyvault.vault.azure.net/secrets/vidizmo-com"
+        },
+        "websubnetName": {
+            "value": "default"
+        },
+        "encsubnetName": {
+            "value": "default"
+        }
+    }
+}

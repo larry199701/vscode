@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appvmSku": {
+            "value": "Standard_D4_v3"
+        },
+        "encvmSku": {
+            "value": "Standard_D4_v3"
+        },
+        "vmssName": {
+            "value": "PSJsvDEM"
+        },
+        "virtualNetworkName": {
+            "value": "scc-vnet"
+        },
+        "instanceCount": {
+            "value": 1
+        },
+        "singlePlacementGroup": {
+            "value": true
+        },
+        "adminUsername": {
+            "value": "larry"
+        },
+        "adminPassword": {
+            "value": "Passw0rd!"
+        },
+        "location": {
+            "value": "EastUS"
+        },
+        "imageReferenceApp": {
+            "value": "scc-webapp-image-20210929140345xxxxx"
+        },
+        "imageReferenceEnc": {
+            "value": "scc-webapp-image-20210929140345xxxxx"
+        },
+        "webComputerPrefix": {
+            "value": "demWEB"
+        },
+        "encComputerPrefix": {
+            "value": "demENC"
+        },
+        "websubnetName": {
+            "value": "default"
+        },
+        "encsubnetName": {
+            "value": "default"
+        }
+    }
+}

@@ -1,0 +1,535 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appvmSku": {
+            "type": "string",
+            "metadata": {
+                "description": "VM size of web application server."
+            }
+        },"encvmSku": {
+            "type": "string",
+            "metadata": {
+                "description": "VM size of content processing server."
+            }
+        },
+        "vmssName": {
+            "type": "string",
+            "metadata": {
+                "description": "String used as a base for naming resources. Must be 3-61 characters in length and globally unique across Azure. A hash is prepended to this string for some resources, and resource-specific information is appended."
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of your existing or new virtual network."
+            }
+        },
+        "instanceCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "minValue": 1,
+            "maxValue": 2,
+            "metadata": {
+                "description": "Number of VM instances (100 or less)."
+            }
+        },
+        "singlePlacementGroup": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true."
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "vmssadmin",
+            "metadata": {
+                "description": "Admin username on all VMs."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Admin password on all VMs."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "platformFaultDomainCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "Fault Domain count for each placement group."
+            }
+        },
+        "imageReferenceApp": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "OS image for VIDIZMO web application server VM Scale Set."
+            }
+        },
+        "imageReferenceEnc": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "OS image for VIDIZMO content processing server VM Scale Set."
+            }
+        },
+        "domainToJoin": {
+            "type": "string",
+            "metadata": {
+                "description": "FQDN of the AD domain."
+            }
+        },
+        "domainUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Username of the account on AD domain."
+            }
+        },
+        "domainPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the account on AD domain."
+            }
+        },
+        "domainJoinOptions": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "Set of bit flags that define the join options. Default value of 3 is a combination of NETSETUP_JOIN_DOMAIN (0x00000001) & NETSETUP_ACCT_CREATE (0x00000002) i.e. will join the domain and create the account on the domain. For more information see https://msdn.microsoft.com/en-us/library/aa392154(v=vs.85).aspx"
+            }
+        },
+        "userAssignedIdentityResourceId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Resource ID of the User Assigned Managed Identity"
+            }
+        },
+        "ObservedCertificates": {
+            "type": "string",
+            "defaultValue": "https://testkeyvault.vault.azure.net/secrets/certificate",
+            "metadata": {
+                "description": "URL of your secret in the certificate key vault."
+            }
+        },
+        "webComputerPrefix": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "OS computer prefix for web application server."
+            }
+        },
+        "encComputerPrefix": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "OS computer prefix for content processing server."
+            }
+        },
+        "websubnetName": {
+            "type": "string",
+            "defaultValue": "default",
+            "metadata": {
+                "description": "Subnet for web app server."
+            }
+        },
+        "encsubnetName": {
+            "type": "string",
+            "defaultValue": "default",
+            "metadata": {
+                "description": "Subnet for encoder server."
+            }
+        }
+    },
+    "variables": {
+        "webssName": "[concat(parameters('vmssName'),'WEBp101')]",
+        "encssName": "[concat(parameters('vmssName'),'ENCp101')]",
+        "webComputerPrefix": "[parameters('webComputerPrefix')]",
+        "encComputerPrefix": "[parameters('encComputerPrefix')]",     
+        "webAppImageName":"[parameters('imageReferenceApp')]",
+        "encAppImageName":"[parameters('imageReferenceEnc')]",
+        "virtualNetworkName": "[parameters('virtualNetworkName')]",
+        "publicIPAddressName": "[concat(parameters('vmssName'), '-IP')]",
+        "loadBalancerName": "[concat(parameters('vmssName'), '-LB')]",
+        "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+        "lbProbeID": "[resourceId('Microsoft.Network/loadBalancers/probes',variables('loadBalancerName'), 'tcpProbe')]",
+        "httpslbProbeID": "[resourceId('Microsoft.Network/loadBalancers/probes',variables('loadBalancerName'), 'httpstcpProbe')]",
+        "natPoolName": "[concat(parameters('vmssName'), '-natpool')]",
+        "bePoolName": "[concat(parameters('vmssName'), '-bepool')]",
+        "lbPoolID": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools',variables('loadBalancerName'),variables('bePoolName'))]",
+        "natStartPort": 50000,
+        "natEndPort": 50119,
+        "natBackendPort": 3389,
+        "appnicName": "[concat(parameters('vmssName'), 'WEBp101-NIC')]",
+        "encnicName": "[concat(parameters('vmssName'), 'ENCp101-NIC')]",
+        "appnsgName": "[concat(parameters('vmssName'), 'WEBp101-NSG')]",
+        "encnsgName": "[concat(parameters('vmssName'), 'ENCp101-NSG')]",
+        "ipConfigName": "[concat(parameters('vmssName'), '-IPCONFIG')]",
+        "frontEndIPConfigID": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations',variables('loadBalancerName'),'loadBalancerFrontEnd')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "name": "[variables('publicIPAddressName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('loadBalancerName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+            ],
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "publicIPAddress": {
+                                "id": "[variables('publicIPAddressID')]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[variables('bePoolName')]"
+                    }
+                ],
+                "inboundNatPools": [
+                    {
+                        "name": "[variables('natPoolName')]",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('frontEndIPConfigID')]"
+                            },
+                            "protocol": "Tcp",
+                            "frontendPortRangeStart": "[variables('natStartPort')]",
+                            "frontendPortRangeEnd": "[variables('natEndPort')]",
+                            "backendPort": "[variables('natBackendPort')]"
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "LBRule",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('frontEndIPConfigID')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[variables('lbPoolID')]"
+                            },
+                            "protocol": "Tcp",
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[variables('lbProbeID')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "httpsLBRule",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('frontEndIPConfigID')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[variables('lbPoolID')]"
+                            },
+                            "protocol": "Tcp",
+                            "frontendPort": 443,
+                            "backendPort": 443,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[variables('httpslbProbeID')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "tcpProbe",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 80,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    },
+                    {
+                        "name": "httpstcpProbe",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 443,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('appnsgName')]",
+            "apiVersion": "2020-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "HTTP",
+                        "properties": {
+                            "priority": 300,
+                            "direction": "Inbound",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "80",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "description": "Inbound rule to allow HTTP traffic."
+                        }
+                    },
+                    {
+                        "name": "HTTPS",
+                        "properties": {
+                            "priority": 301,
+                            "direction": "Inbound",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "443",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "description": "Inbound rule to allow HTTPS traffic."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('encnsgName')]",
+            "apiVersion": "2020-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "apiVersion": "2021-03-01",
+            "name": "[variables('webssName')]",
+            "location": "[parameters('location')]",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities":{
+                   "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityResourceId'))]": {}
+                }
+            },
+            "sku": {
+                "name": "[parameters('appvmSku')]",
+                "tier": "Standard",
+                "capacity": "[parameters('instanceCount')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]"
+            ],
+            "properties": {
+                "overprovision": false,
+                "upgradePolicy": {
+                    "mode": "Manual"
+                },
+                "singlePlacementGroup": "[parameters('singlePlacementGroup')]",
+                "platformFaultDomainCount": "[parameters('platformFaultDomainCount')]",
+                "virtualMachineProfile": {
+                    "storageProfile": {
+                        "osDisk": {
+                            "createOption": "FromImage"
+                        },
+                        "imageReference": {
+                            "id": "[resourceId('Microsoft.Compute/images', variables('webAppImageName'))]"
+                        }
+                    },
+                    "osProfile": {
+                        "computerNamePrefix": "[variables('webComputerPrefix')]",
+                        "adminUsername": "[parameters('adminUsername')]",
+                        "adminPassword": "[parameters('adminPassword')]"
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                            {
+                                "name": "[variables('appnicName')]",
+                                "properties": {
+                                    "primary": true,
+                                    "ipConfigurations": [
+                                        {
+                                            "name": "[variables('ipConfigName')]",
+                                            "properties": {
+                                                "subnet": {
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('websubnetName'))]"
+                                                },
+                                                "loadBalancerBackendAddressPools": [
+                                                    {
+                                                        "id": "[variables('lbPoolID')]"
+                                                    }
+                                                ],
+                                                "loadBalancerInboundNatPools": [
+                                                    {
+                                                        "id": "[resourceId('Microsoft.Network/loadBalancers/inboundNatPools', variables('loadBalancerName'),  variables('natPoolName'))]"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "networkSecurityGroup": {
+                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('appnsgName'))]"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "extensionProfile": {
+                        "extensions": [
+                            {
+                                "name": "joindomain",
+                                "properties": {
+                                    "publisher": "Microsoft.Compute",
+                                    "type": "JsonADDomainExtension",
+                                    "typeHandlerVersion": "1.3",
+                                    "autoUpgradeMinorVersion": true,
+                                    "settings": {
+                                        "Name": "[parameters('domainToJoin')]",
+                                        "User": "[parameters('domainUsername')]",
+                                        "Restart": true,
+                                        "Options": "[parameters('domainJoinOptions')]"
+                                    },
+                                    "protectedSettings": {
+                                        "password": "[parameters('domainPassword')]"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "Microsoft.Compute/virtualMachine/extensions",
+                                "name": "KeyVaultForWindows",
+                                "location": "[parameters('location')]",
+                                "properties": {
+                                    "publisher": "Microsoft.Azure.KeyVault",
+                                    "type": "KeyVaultForWindows",
+                                    "typeHandlerVersion": "1.0",
+                                    "autoUpgradeMinorVersion": true,
+                                    "settings": {
+                                        "secretsManagementSettings": {
+                                            "pollingIntervalInS": "3600",
+                                            "certificateStoreName": "MY",
+                                            "certificateStoreLocation": "LocalMachine",
+                                            "observedCertificates": ["[parameters('ObservedCertificates')]"]
+                                        }      
+                                    }                                    
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "apiVersion": "2021-03-01",
+            "name": "[variables('encssName')]",
+            "location": "[parameters('location')]",            
+            "sku": {
+                "name": "[parameters('encvmSku')]",
+                "tier": "Standard",
+                "capacity": "[parameters('instanceCount')]"
+            },            
+            "properties": {
+                "overprovision": false,
+                "upgradePolicy": {
+                    "mode": "Manual"
+                },
+                "singlePlacementGroup": "[parameters('singlePlacementGroup')]",
+                "platformFaultDomainCount": "[parameters('platformFaultDomainCount')]",
+                "virtualMachineProfile": {
+                    "storageProfile": {
+                        "osDisk": {
+                            "createOption": "FromImage"
+                        },
+                        "imageReference": {
+                            "id": "[resourceId('Microsoft.Compute/images', variables('encAppImageName'))]"
+                        }
+                    },
+                    "osProfile": {
+                        "computerNamePrefix": "[variables('encComputerPrefix')]",
+                        "adminUsername": "[parameters('adminUsername')]",
+                        "adminPassword": "[parameters('adminPassword')]"
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                            {
+                                "name": "[variables('encnicName')]",
+                                "properties": {
+                                    "primary": true,
+                                    "ipConfigurations": [
+                                        {
+                                            "name": "[variables('ipConfigName')]",
+                                            "properties": {
+                                                "subnet": {
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('encsubnetName'))]"
+                                                }                                                
+                                            }
+                                        }
+                                    ],
+                                    "networkSecurityGroup": {
+                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('encnsgName'))]"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "extensionProfile": {
+                        "extensions": [
+                            {
+                                "name": "joindomain",
+                                "properties": {
+                                    "publisher": "Microsoft.Compute",
+                                    "type": "JsonADDomainExtension",
+                                    "typeHandlerVersion": "1.3",
+                                    "autoUpgradeMinorVersion": true,
+                                    "settings": {
+                                        "Name": "[parameters('domainToJoin')]",
+                                        "User": "[parameters('domainUsername')]",
+                                        "Restart": true,
+                                        "Options": "[parameters('domainJoinOptions')]"
+                                    },
+                                    "protectedSettings": {
+                                        "password": "[parameters('domainPassword')]"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
