@@ -8,6 +8,9 @@
         "subnet1Name": {
             "value": "sccsubnet1"
         },
+        "subnet2Name": {
+            "value": "sccsubnet2"
+        },
         "location": {
             "value": "eastus"
         }

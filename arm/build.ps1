@@ -16,7 +16,6 @@ New-AzResourceGroupDeployment `
  #>
 
 
-<# 
 #### 1. create scc-vnet ####
 New-AzResourceGroupDeployment `
     -Name 'scc-vnetName' `
@@ -24,6 +23,9 @@ New-AzResourceGroupDeployment `
     -TemplateFile 'json\scc1vnet.json' `
     -TemplateParameterFile '.\json\scc1vnet.parameters.json' `
     -Verbose
+
+    
+<# 
 #### 2. create scc-nsg ####
 New-AzResourceGroupDeployment `
     -Name 'scc-nsgName' `
@@ -125,18 +127,17 @@ New-AzResourceGroupDeployment `
 
 
 
-
-    
-#>
-
 #### create vm from image ####
 New-AzResourceGroupDeployment `
--Name 'create-vm-from-image' `
--ResourceGroupName $rg `
--TemplateFile 'json\create-vm-from-image.json' `
--TemplateParameterFile '.\json\create-vm-from-image.parameters.json' `
--Verbose
+    -Name 'create-vm-from-image' `
+    -ResourceGroupName $rg `
+    -TemplateFile 'json\create-vm-from-image.json' `
+    -TemplateParameterFile '.\json\create-vm-from-image.parameters.json' `
+    -Verbose
 
 
+#>
+
+    
 
 

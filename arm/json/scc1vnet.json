@@ -19,6 +19,14 @@
         "description": ""
       }
     },
+    "subnet2Name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 61,
+      "metadata": {
+        "description": ""
+      }
+    },
 
     "location": {
       "type": "string",
@@ -29,8 +37,9 @@
     }
   },
   "variables": {
-    "addressPrefix": "10.10.0.0/16",
-    "subnetPrefix": "10.10.0.0/24"
+    "addressPrefix": "10.20.0.0/16",
+    "subnet1Prefix": "10.20.0.0/24",
+    "subnet2Prefix": "10.20.1.0/24"
   },
   "resources": [
     {
@@ -46,7 +55,13 @@
           {
             "name": "[parameters('subnet1Name')]",
             "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
+              "addressPrefix": "[variables('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet2Prefix')]"
             }
           }
         ]
