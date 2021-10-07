@@ -1,7 +1,7 @@
 
 
 #$rg = "ddd"
-$rg = "test-rg"
+$rg = "test1rg"
 New-AzResourceGroup -Name $rg -Location eastus -Force
 
 
@@ -20,8 +20,7 @@ New-AzResourceGroupDeployment `
 New-AzResourceGroupDeployment `
     -Name 'scc-vnetName' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\scc1vnet.json' `
-    -TemplateParameterFile '.\json\scc1vnet.parameters.json' `
+    -TemplateFile 'azuredeploy.json' `
     -Verbose
 
     
