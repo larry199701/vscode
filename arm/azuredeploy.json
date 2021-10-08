@@ -58,8 +58,9 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', '3pip')]",
-        "[resourceId('Microsoft.Resources/deployments', '1vnet')]"
+        "[resourceId('Microsoft.Resources/deployments', '1vnet')]",
+        "[resourceId('Microsoft.Resources/deployments', '2nsg')]",
+        "[resourceId('Microsoft.Resources/deployments', '3pip')]"
       ],
       "properties": {
         "mode": "Incremental",
