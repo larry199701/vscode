@@ -6,7 +6,23 @@
   "variables": {},
   "resources": [
     {
-      "name": "linkedTemplate",
+      "name": "1vnet",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/1vnet.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/1vnet.parameters.json",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "name": "2nsg",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
       "properties": {
@@ -17,6 +33,38 @@
         },
         "parametersLink": {
           "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/2nsg.parameters.json",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "name": "3pip",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/3pip.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/3pip.parameters.json",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "name": "4nif",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/4nif.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/4nif.parameters.json",
           "contentVersion": "1.0.0.0"
         }
       }
