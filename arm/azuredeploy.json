@@ -12,11 +12,11 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/1vnet.json",
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/2nsg.json",
           "contentVersion": "1.0.0.0"
         },
         "parametersLink": {
-          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/1vnet.parameters.json",
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/2nsg.parameters.json",
           "contentVersion": "1.0.0.0"
         }
       }
