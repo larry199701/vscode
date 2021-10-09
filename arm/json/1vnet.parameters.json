@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vnetName": {
-            "value": "sccvnet"
+            "value": "vnet1"
         },
         "subnet1Name": {
-            "value": "sccsubnet1"
+            "value": "subnet1"
         },
         "subnet2Name": {
-            "value": "sccsubnet2"
+            "value": "subnet2"
         },
         "location": {
             "value": "eastus"

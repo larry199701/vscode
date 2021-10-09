@@ -3,19 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vnetName": {
-            "value": "sccvnet"
+            "value": "vnet1"
         },
         "subnet1Name": {
-            "value": "sccsubnet1"
+            "value": "subnet1"
         },
         "nifName": {
-            "value": "sccnif"
-        },
-        "pipName": {
-            "value": "sccpip"
+            "value": "nif1"
         },
         "nsgName": {
-            "value": "sccnsg"
+            "value": "nsg1"
         }
     }
 }

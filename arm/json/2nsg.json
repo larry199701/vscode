@@ -4,7 +4,7 @@
   "parameters": {
     "nsgName": {
       "type": "string",
-      "defaultValue": "sccnsg",
+      "defaultValue": "nsg1",
       "metadata": {
         "description": ""
       }

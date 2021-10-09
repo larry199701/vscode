@@ -4,7 +4,7 @@
   "parameters": {
     "pipName": {
       "type": "string",
-      "defaultValue": "sccpip",
+      "defaultValue": "pip1",
       "metadata": {
         "description": ""
       }

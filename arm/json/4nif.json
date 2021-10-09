@@ -3,23 +3,19 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vnetName": {
-      "defaultValue": "sccvnet",
+      "defaultValue": "vnet1",
       "type": "String"
     },
     "subnet1Name": {
-      "defaultValue": "sccsubnet1",
+      "defaultValue": "subnet1",
       "type": "String"
     },
     "nifName": {
-      "defaultValue": "sccnif",
-      "type": "String"
-    },
-    "pipName": {
-      "defaultValue": "sccpip",
+      "defaultValue": "nif1",
       "type": "String"
     },
     "nsgName": {
-      "defaultValue": "sccnsg",
+      "defaultValue": "nsg1",
       "type": "String"
     }
   },
@@ -38,9 +34,6 @@
             "properties": {
               "privateIPAddress": "10.0.0.4",
               "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('pipName'))]"
-              },
               "subnet": {
                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnet1Name'))]"
               },
