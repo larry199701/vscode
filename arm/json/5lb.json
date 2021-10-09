@@ -1,0 +1,49 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "lbName": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    },
+    "sku": {
+      "type": "String"
+    },
+    "tier": {
+      "type": "String"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/loadBalancers",
+      "apiVersion": "2020-11-01",
+      "name": "[parameters('lbName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": ["[resourceId('Microsoft.Resources/deployments', '3pip')]"],
+      "tags": {},
+      "sku": {
+        "name": "[parameters('sku')]",
+        "tier": "[parameters('tier')]"
+      },
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "myFIP",
+            "properties": {
+              "publicIPAddress": {
+                "id": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/publicIPAddresses/pip1"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [],
+        "probes": [],
+        "loadBalancingRules": [],
+        "inboundNatRules": [],
+        "outboundRules": []
+      }
+    }
+  ]
+}

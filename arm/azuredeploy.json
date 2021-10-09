@@ -73,6 +73,27 @@
           "contentVersion": "1.0.0.0"
         }
       }
+    },
+    {
+      "name": "5lb",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', '1vnet')]",
+        "[resourceId('Microsoft.Resources/deployments', '2nsg')]",
+        "[resourceId('Microsoft.Resources/deployments', '3pip')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/4nif.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/4nif.parameters.json",
+          "contentVersion": "1.0.0.0"
+        }
+      }
     }
   ],
   "outputs": {}

@@ -6,13 +6,13 @@
             "value": "eastus"
         },
         "lbName": {
-            "value": "scclb"
+            "value": "lb1"
         },
         "sku": {
             "value": "skuName1"
         },
         "tier": {
-            "value": "Standard"
+            "value": "Regional"
         }
     }
 }
