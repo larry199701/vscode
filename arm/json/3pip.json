@@ -2,9 +2,16 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "pipName": {
+    "pip1Name": {
       "type": "string",
       "defaultValue": "pip1",
+      "metadata": {
+        "description": ""
+      }
+    },
+    "pip2Name": {
+      "type": "string",
+      "defaultValue": "pip2",
       "metadata": {
         "description": ""
       }
@@ -22,7 +29,7 @@
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2020-11-01",
-      "name": "[parameters('pipName')]",
+      "name": "[parameters('pip1Name')]",
       "location": "[parameters('location')]",
       "sku": {
         "name": "Standard"
@@ -31,15 +38,26 @@
       "properties": {
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
-          "domainNameLabel": "[concat(parameters('pipName'), '45767')]"
+          "domainNameLabel": "[concat(parameters('pip1Name'), '45767')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2020-11-01",
+      "name": "[parameters('pip2Name')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "zones": ["1", "2", "3"],
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "dnsSettings": {
+          "domainNameLabel": "[concat(parameters('pip2Name'), '45767')]"
         }
       }
     }
   ],
-  "outputs": {
-    "applicationUrl": {
-      "type": "string",
-      "value": "[concat('http://', reference(parameters('pipName')).dnsSettings.fqdn, '/MyApp')]"
-    }
-  }
+  "outputs": {}
 }
