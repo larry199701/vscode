@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vnetName": {
-            "value": "larry"
+            "value": "vnet1"
         },
         "subnetName": {
-            "value": "larry"
+            "value": "subnet1"
         },
         "adminUsername": {
             "value": "larry"

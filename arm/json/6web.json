@@ -8,7 +8,7 @@
     },
 
     "subnetName": {
-      "defaultValue": "vnet1",
+      "defaultValue": "subnet1",
       "type": "String"
     },
 
