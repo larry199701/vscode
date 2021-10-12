@@ -15,7 +15,7 @@
       "type": "String"
     },
     "nifName": {
-      "defaultValue": "mynif",
+      "defaultValue": "nif1",
       "type": "String"
     }
   },
