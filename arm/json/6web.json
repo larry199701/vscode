@@ -43,7 +43,7 @@
             "name": "ipconfig1",
             "properties": {
               "subnet": {
-                "id": "[concat('/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/virtualNetworks/', parameters('vnetName'), parameters('subnetName'))]"
+                "id": "[concat('/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/virtualNetworks/', parameters('vnetName'), '/', parameters('subnetName'))]"
               },
               "privateIPAllocationMethod": "Dynamic"
             }
