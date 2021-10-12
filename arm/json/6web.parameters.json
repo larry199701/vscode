@@ -14,9 +14,6 @@
         "virtualNetworkId": {
             "value": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/virtualNetworks/vnet1"
         },
-        "publicIpAddressId": {
-            "value": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/publicIPAddresses/pip1"
-        },
         "virtualMachineName": {
             "value": "myVM"
         },

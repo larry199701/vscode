@@ -14,9 +14,6 @@
     "virtualNetworkId": {
       "type": "String"
     },
-    "publicIpAddressId": {
-      "type": "String"
-    },
     "virtualMachineName": {
       "type": "String"
     },
@@ -61,10 +58,7 @@
               "subnet": {
                 "id": "[variables('subnetRef')]"
               },
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIpAddress": {
-                "id": "[parameters('publicIpAddressId')]"
-              }
+              "privateIPAllocationMethod": "Dynamic"
             }
           }
         ]
