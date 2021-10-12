@@ -36,7 +36,7 @@
             "value": "larry"
         },
         "adminPassword": {
-            "value": null
+            "value": "Password123$"
         },
         "patchMode": {
             "value": "AutomaticByOS"
