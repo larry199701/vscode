@@ -9,10 +9,10 @@
             "value": "Password123"
         },
         "vmName": {
-            "value": "scc-webapp"
+            "value": "vmapp1"
         },
         "nifName": {
-            "value": "sccnif"
+            "value": "mynif"
         }
     }
 }

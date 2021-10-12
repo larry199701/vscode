@@ -11,11 +11,11 @@
       "type": "String"
     },
     "vmName": {
-      "defaultValue": "scc-webapp",
+      "defaultValue": "vmapp1",
       "type": "String"
     },
     "nifName": {
-      "defaultValue": "sccnif",
+      "defaultValue": "mynif",
       "type": "String"
     }
   },
@@ -26,8 +26,7 @@
       "apiVersion": "2021-03-01",
       "name": "[parameters('vmName')]",
       "location": "eastus",
-      "dependsOn": [
-      ],
+      "dependsOn": [],
       "properties": {
         "hardwareProfile": {
           "vmSize": "Standard_D2s_v3"
@@ -51,7 +50,7 @@
           "dataDisks": []
         },
         "osProfile": {
-          "computerName": "sccweb",
+          "computerName": "cmpuapp1",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]",
           "windowsConfiguration": {
@@ -100,15 +99,6 @@
           ],
           "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File installWebServer.ps1"
 
-
-
-
-
-
-
-
-
-          
           /*"commandToExecute": "$LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); & "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running: $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound)"
           /* "commandToExecute": "powershell.exe Install-WindowsFeature -name Web-Server -IncludeManagementTools && powershell.exe remove-item 'C:\\inetpub\\wwwroot\\iisstart.htm' && powershell.exe Add-Content -Path 'C:\\inetpub\\wwwroot\\iisstart.htm' -Value $('Hello World from ' + $env:computername)"*/
         }

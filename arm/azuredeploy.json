@@ -94,6 +94,23 @@
           "contentVersion": "1.0.0.0"
         }
       }
+    },
+    {
+      "name": "5webapp",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/6web.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "https://raw.githubusercontent.com/larry199702/vscode/main/arm/json/6web.parameters.json",
+          "contentVersion": "1.0.0.0"
+        }
+      }
     }
   ],
   "outputs": {}
