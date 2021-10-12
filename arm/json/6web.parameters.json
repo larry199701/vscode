@@ -23,9 +23,6 @@
         "virtualMachineComputerName": {
             "value": "myVM"
         },
-        "virtualMachineRG": {
-            "value": "test1rg"
-        },
         "osDiskType": {
             "value": "Premium_LRS"
         },
