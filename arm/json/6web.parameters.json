@@ -1,18 +1,48 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "networkInterfaceName": {
+            "value": "myvm240"
+        },
+        "subnetName": {
+            "value": "subnet1"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/virtualNetworks/vnet1"
+        },
+        "publicIpAddressId": {
+            "value": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test1rg/providers/Microsoft.Network/publicIPAddresses/pip1"
+        },
+        "virtualMachineName": {
+            "value": "myVM"
+        },
+        "virtualMachineComputerName": {
+            "value": "myVM"
+        },
+        "virtualMachineRG": {
+            "value": "test1rg"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_DS1_v2"
+        },
         "adminUsername": {
             "value": "larry"
         },
         "adminPassword": {
-            "value": "Password123"
+            "value": null
         },
-        "vmName": {
-            "value": "vmapp1"
+        "patchMode": {
+            "value": "AutomaticByOS"
         },
-        "nifName": {
-            "value": "nif1"
+        "enableHotpatching": {
+            "value": false
         }
     }
 }

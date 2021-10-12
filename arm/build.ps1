@@ -18,7 +18,7 @@ New-AzResourceGroupDeployment `
 
 #### 1. create scc-vnet ####
 New-AzResourceGroupDeployment `
-    -Name 'Vnet and All' `
+    -Name 'Vnet-and-All' `
     -ResourceGroupName $rg `
     -TemplateFile 'azuredeploy.json' `
     -Verbose
