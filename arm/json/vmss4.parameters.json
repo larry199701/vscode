@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmSku": {
+            "value": "Standard_DS1_v2"
+        },
+        "windowsOSVersion": {
+            "value": "2012-R2-Datacenter"
+        },
+        "vmssName": {
+            "value": "vmss2"
+        },
+        "instanceCount": {
+            "value": 3
+        },
+        "adminUsername": {
+            "value": "larry"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "adminPassword": {
+            "value": "Password123$"
+        }
+    }
+}

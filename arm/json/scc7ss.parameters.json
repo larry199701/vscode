@@ -35,7 +35,7 @@
             ]
         },
         "virtualMachineScaleSetName": {
-            "value": "testSS1"
+            "value": "testSS"
         },
         "singlePlacementGroup": {
             "value": "false"

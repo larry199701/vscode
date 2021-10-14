@@ -1,7 +1,7 @@
 
 
 #$rg = "ddd"
-$rg = "test1rg"
+$rg = "test-rg"
 New-AzResourceGroup -Name $rg -Location eastus -Force
 
 
@@ -13,18 +13,24 @@ New-AzResourceGroupDeployment `
     -TemplateFile 'json\scc0-inline-nested.json' `
     -TemplateParameterFile '.\json\scc0-inline-nested.parameters.json' `
     -Verbose
- #>
-
-
-#### 1. create scc-vnet ####
+    #### 1. create scc-vnet ####
 New-AzResourceGroupDeployment `
     -Name 'Vnet-and-All' `
     -ResourceGroupName $rg `
     -TemplateFile 'azuredeploy.json' `
     -Verbose
+ 
 
-    
+#>
 <# 
+#### 1. create scc-vnet ####
+New-AzResourceGroupDeployment `
+    -Name 'Winimage' `
+    -ResourceGroupName $rg `
+    -TemplateFile 'json\sccsingle.json' `
+    -TemplateParameterFile '.\json\sccsingle.parameters.json' `
+    -Verbose
+    
 #### 2. create scc-nsg ####
 New-AzResourceGroupDeployment `
     -Name 'scc-nsgName' `
@@ -82,17 +88,17 @@ New-AzResourceGroupDeployment `
 #### Need to generate the above VM
 ####
 
-<# 
-
 #### 7. create scc-ss ####
 New-AzResourceGroupDeployment `
     -Name 'scc-ssName' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\scc7ss1.json' `
-    -TemplateParameterFile '.\json\scc7ss1.parameters.json' `
+    -TemplateFile 'json\scc7ss.json' `
+    -TemplateParameterFile '.\json\scc7ss.parameters.json' `
     -Verbose
 
 
+
+<# 
 
 
 #### 8. create scc-ss ####

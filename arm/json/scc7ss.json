@@ -85,7 +85,7 @@
               }
             },
             "imageReference": {
-              "id": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/test-rg/providers/Microsoft.Compute/images/scc-webapp-image-20210929140345xxxxx"
+              "id": "/subscriptions/590f79be-f0a3-4037-b444-21d2aebea87e/resourceGroups/winimagerg/providers/Microsoft.Compute/images/scc-webapp-image-20211012145430xxx"
             }
           },
           "networkProfile": {
