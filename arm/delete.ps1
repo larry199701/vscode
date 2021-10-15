@@ -1,3 +1,3 @@
-$rg = "test1rg"
+$rg = "test-rg"
 
 Get-AzResourceGroup $rg | Remove-AzResourceGroup -Force

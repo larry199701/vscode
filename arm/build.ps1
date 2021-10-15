@@ -88,12 +88,21 @@ New-AzResourceGroupDeployment `
 #### Need to generate the above VM
 ####
 
+
+#### 8. create Vnet/subnet ####
+New-AzResourceGroupDeployment `
+    -Name 'scc-midName' `
+    -ResourceGroupName $rg `
+    -TemplateFile '.\json\1vnet.json' `
+    -TemplateParameterFile '.\json\1vnet.parameters.json' `
+    -Verbose
+
 #### 7. create scc-ss ####
 New-AzResourceGroupDeployment `
     -Name 'scc-ssName' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\scc7ss.json' `
-    -TemplateParameterFile '.\json\scc7ss.parameters.json' `
+    -TemplateFile 'json\scc7ss1.json' `
+    -TemplateParameterFile '.\json\scc7ss1.parameters.json' `
     -Verbose
 
 
