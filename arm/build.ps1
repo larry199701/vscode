@@ -91,18 +91,18 @@ New-AzResourceGroupDeployment `
 
 #### 8. create Vnet/subnet ####
 New-AzResourceGroupDeployment `
-    -Name 'scc-midName' `
+    -Name 'Vnet-subnet' `
     -ResourceGroupName $rg `
     -TemplateFile '.\json\1vnet.json' `
     -TemplateParameterFile '.\json\1vnet.parameters.json' `
     -Verbose
 
-#### 7. create scc-ss ####
+#### 7. create a scale set only ####
 New-AzResourceGroupDeployment `
-    -Name 'scc-ssName' `
+    -Name 'ScaleSet' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\scc7ss1.json' `
-    -TemplateParameterFile '.\json\scc7ss1.parameters.json' `
+    -TemplateFile 'json\20ssonly.json' `
+    -TemplateParameterFile '.\json\20ssonly.parameters.json' `
     -Verbose
 
 
