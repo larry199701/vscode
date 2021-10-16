@@ -22,6 +22,12 @@
         },
         "existingSubnetName": {
             "value": "subnet1"
+        },
+        "subsid": {
+            "value": "590f79be-f0a3-4037-b444-21d2aebea87e"
+        },
+        "vmimageName": {
+            "value": "scc-webapp-image-20211012145430xxx"
         }
     }
 }

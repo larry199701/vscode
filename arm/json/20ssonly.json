@@ -53,6 +53,20 @@
       "metadata": {
         "description": "Name of the existing subnet to deploy the scale set into."
       }
+    },
+
+    "subsid": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing subs"
+      }
+    },
+
+    "vmimageName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing vm image"
+      }
     }
   },
   "variables": {},
@@ -74,16 +88,14 @@
         "virtualMachineProfile": {
           "storageProfile": {
             "osDisk": {
-              "createOption": "FromImage",
+              "createOption": "fromImage",
               "caching": "ReadWrite"
             },
             "imageReference": {
-              "publisher": "MicrosoftWindowsServer",
-              "offer": "WindowsServer",
-              "sku": "2016-Datacenter",
-              "version": "latest"
+              "id": "[concat('/subscriptions/', parameters('subsid'), '/resourceGroups/winimagerg/providers/Microsoft.Compute/images/', parameters('vmimageName')                       )]"
             }
           },
+
           "osProfile": {
             "computerNamePrefix": "[parameters('vmssName')]",
             "adminUsername": "[parameters('adminUsername')]",
