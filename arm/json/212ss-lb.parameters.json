@@ -9,7 +9,7 @@
             "value": "vmsswinName2"
         },
         "instanceCount": {
-            "value": 3
+            "value": 5
         },
         "adminUsername": {
             "value": "larry"
@@ -22,9 +22,6 @@
         },
         "vmimageName": {
             "value": "scc-webapp-image-20211012145430xxx"
-        },
-        "windowsOSVersion": {
-            "value": "2012-R2-Datacenter"
         }
     }
 }
