@@ -44,13 +44,6 @@
       }
     },
 
-    "subsid": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the existing subs"
-      }
-    },
-
     "vmimageName": {
       "type": "string",
       "metadata": {
@@ -227,7 +220,7 @@
               "createOption": "FromImage"
             },
             "imageReference": {
-              "id": "[concat('/subscriptions/', parameters('subsid'), '/resourceGroups/winimagerg/providers/Microsoft.Compute/images/', parameters('vmimageName'))]"
+              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/winimagerg/providers/Microsoft.Compute/images/', parameters('vmimageName'))]"
             }
           },
 

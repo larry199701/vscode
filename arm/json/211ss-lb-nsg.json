@@ -53,6 +53,7 @@
   },
   "functions": [],
   "variables": {
+    "networkSecurityGroupName": "allowRemoting",
     "namingInfix": "[toLower(substring(format('{0}{1}', parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
     "longNamingInfix": "[toLower(parameters('vmssName'))]",
     "addressPrefix": "10.0.0.0/16",
@@ -84,6 +85,45 @@
             "name": "[variables('subnetName')]",
             "properties": {
               "addressPrefix": "[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2020-11-01",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "remoteConnection",
+            "properties": {
+              "description": "Allow RDP traffic",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 101,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "webTraffic",
+            "properties": {
+              "description": "Allow web traffic",
+              "protocol": "Tcp",
+              "sourcePortRange": "80",
+              "destinationPortRange": "80",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
             }
           }
         ]
@@ -176,6 +216,9 @@
               {
                 "name": "[variables('nicName')]",
                 "properties": {
+                  "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                  },
                   "primary": true,
                   "ipConfigurations": [
                     {

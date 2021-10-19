@@ -101,8 +101,8 @@ New-AzResourceGroupDeployment `
 New-AzResourceGroupDeployment `
     -Name 'ScaleSet' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\212ss-gw.json' `
-    -TemplateParameterFile '.\json\212ss-gw.parameters.json' `
+    -TemplateFile 'json\211ss-lb-nsg.json' `
+    -TemplateParameterFile '.\json\211ss-lb-nsg.parameters.json' `
     -Verbose
 
 
