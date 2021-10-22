@@ -6,7 +6,7 @@
             "value": "larry"
         },
         "adminPassword": {
-            "value": "Password123"
+            "value": "Password123$"
         },
         "virtualNetworks_scc_rg_vnet_name": {
             "value": "scc-vnet"

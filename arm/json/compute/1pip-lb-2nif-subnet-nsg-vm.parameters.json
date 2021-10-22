@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "value": "vnet1"
+        },
+        "subnet1Name": {
+            "value": "subnet1"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "adminUsername": {
+            "value": "larry"
+        },
+        "adminPassword": {
+            "value": "Password123$"
+        },
+        "dnsNameforLBIP": {
+            "value": "dnsname19870124"
+        },
+        "storageAccountName": {
+            "value": "sa970790170234"
+        },
+        "vmSize": {
+            "value": "Standard_D2_v3"
+        }
+    }
+}

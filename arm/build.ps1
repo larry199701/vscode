@@ -1,7 +1,7 @@
 
 
-#$rg = "ddd"
-$rg = "test-rg"
+
+$rg = "test-1-rg"
 New-AzResourceGroup -Name $rg -Location eastus -Force
 
 
@@ -22,15 +22,15 @@ New-AzResourceGroupDeployment `
  
 
 #>
-<# 
 #### 1. create scc-vnet ####
 New-AzResourceGroupDeployment `
     -Name 'Winimage' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\sccsingle.json' `
-    -TemplateParameterFile '.\json\sccsingle.parameters.json' `
+    -TemplateFile 'json\compute\1pip-lb-2nif-subnet-nsg-vm.json' `
+    -TemplateParameterFile '.\json\compute\1pip-lb-2nif-subnet-nsg-vm.parameters.json' `
     -Verbose
     
+<# 
 #### 2. create scc-nsg ####
 New-AzResourceGroupDeployment `
     -Name 'scc-nsgName' `
@@ -84,6 +84,8 @@ New-AzResourceGroupDeployment `
 #>
 
 
+
+<# 
 ####
 #### Need to generate the above VM
 ####
@@ -106,8 +108,6 @@ New-AzResourceGroupDeployment `
     -Verbose
 
 
-
-<# 
 
 
 #### 8. create scc-ss ####
