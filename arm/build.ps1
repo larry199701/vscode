@@ -7,8 +7,8 @@ New-AzResourceGroup -Name $rg -Location eastus -Force
 New-AzResourceGroupDeployment `
     -Name 'Winimage' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\web\1appplan.json' `
-    -TemplateParameterFile '.\json\web\1appplan.parameters.json' `
+    -TemplateFile 'json\web\1appplan_webapp.json' `
+    -TemplateParameterFile '.\json\web\1appplan_webapp.parameters.json' `
     -Verbose
     
 
