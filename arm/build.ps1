@@ -3,7 +3,14 @@
 
 $rg = "test-1-rg"
 New-AzResourceGroup -Name $rg -Location eastus -Force
-
+#### 1. create scc-vnet ####
+New-AzResourceGroupDeployment `
+    -Name 'Winimage' `
+    -ResourceGroupName $rg `
+    -TemplateFile 'json\web\1appplan.json' `
+    -TemplateParameterFile '.\json\web\1appplan.parameters.json' `
+    -Verbose
+    
 
 <#
 #### 1. create scc-vnet ####
@@ -22,14 +29,7 @@ New-AzResourceGroupDeployment `
  
 
 #>
-#### 1. create scc-vnet ####
-New-AzResourceGroupDeployment `
-    -Name 'Winimage' `
-    -ResourceGroupName $rg `
-    -TemplateFile 'json\compute\1pip-lb-2nif-subnet-nsg-vm.json' `
-    -TemplateParameterFile '.\json\compute\1pip-lb-2nif-subnet-nsg-vm.parameters.json' `
-    -Verbose
-    
+
 <# 
 #### 2. create scc-nsg ####
 New-AzResourceGroupDeployment `
