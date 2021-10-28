@@ -5,10 +5,10 @@ $rg = "test-1-rg"
 New-AzResourceGroup -Name $rg -Location eastus -Force
 #### 1. create scc-vnet ####
 New-AzResourceGroupDeployment `
-    -Name 'Winimage' `
+    -Name 'Network_Test' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\web\3webapp_appinsight.json' `
-    -TemplateParameterFile '.\json\web\3webapp_appinsight.parameters.json' `
+    -TemplateFile 'json\network\1vnet-vnet-peering.json' `
+    -TemplateParameterFile '.\json\network\1vnet-vnet-peering.parameters.json' `
     -Verbose
     
 
