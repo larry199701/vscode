@@ -29,10 +29,6 @@
     "networkSecurityGroups_scc_webapp_windows2019_nsg_name": {
       "defaultValue": "scc-webapp-windows2019-nsg",
       "type": "String"
-    },
-    "schedules_shutdown_computevm_scc_webapp_windows2019_name": {
-      "defaultValue": "shutdown-computevm-scc-webapp-windows2019",
-      "type": "String"
     }
   },
   "variables": {},
