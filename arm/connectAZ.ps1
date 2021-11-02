@@ -1,4 +1,4 @@
-#Larry Test Directory + Visual Studio Enterprise Subscription–MPN-Larry Sui
-Connect-AzAccount -Tenant 'd6ad0c04-25be-40c4-8f01-72654154036c' -SubscriptionId '590f79be-f0a3-4037-b444-21d2aebea87e'
+#SCC Prod Directory + Visual Studio Enterprise Subscription–MPN-Larry Sui
+Connect-AzAccount -Tenant '8cf54bdf-911d-4ab2-ad23-ddbcd8624346' -SubscriptionId '8ab5827f-7060-4ea3-a08d-1922c26cf7ac'
 
 #Disconnect-AzAccount
