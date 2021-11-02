@@ -7,8 +7,8 @@ New-AzResourceGroup -Name $rg -Location eastus -Force
 New-AzResourceGroupDeployment `
     -Name 'Network_Test' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\network\1vnet-vnet-peering.json' `
-    -TemplateParameterFile '.\json\network\1vnet-vnet-peering.parameters.json' `
+    -TemplateFile 'json\network\2vnet-bastion.json' `
+    -TemplateParameterFile '.\json\network\2vnet-bastion.parameters.json' `
     -Verbose
     
 
