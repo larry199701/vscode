@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmSku": {
+            "value": "Standard_D2s_v3"
+        },
+        "vmssName": {
+            "value": "vmss1"
+        },
+        "instanceCount": {
+            "value": 2
+        },
+        "adminUsername": {
+            "value": "Larry"
+        },
+        "adminPassword": {
+            "value": "Password123$"
+        },
+        "existingVnetName": {
+            "value": "vnet1"
+        },
+        "existingSubnetName": {
+            "value": "subnet1"
+        },
+        "subsid": {
+            "value": "590f79be-f0a3-4037-b444-21d2aebea87e"
+        },
+        "vmimageName": {
+            "value": "scc-webapp-image-20211012145430xxx"
+        }
+    }
+}
