@@ -7,8 +7,8 @@ New-AzResourceGroup -Name $rg -Location eastus -Force
 New-AzResourceGroupDeployment `
     -Name 'Network_Test' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\compute\3single-vd.json' `
-    -TemplateParameterFile '.\json\compute\3single-vd.parameters.json' `
+    -TemplateFile 'json\cdn\cdn-web-app.json' `
+    -TemplateParameterFile '.\json\cdn\cdn-web-app.parameters.json' `
     -Verbose
     
 
