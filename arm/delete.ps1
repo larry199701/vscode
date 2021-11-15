@@ -1,3 +1,3 @@
-$rg = "test-1-rg"
+$rg = "myAIB-rg"
 
 Get-AzResourceGroup $rg | Remove-AzResourceGroup -Force

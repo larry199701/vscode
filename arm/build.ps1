@@ -7,8 +7,8 @@ New-AzResourceGroup -Name $rg -Location eastus -Force
 New-AzResourceGroupDeployment `
     -Name 'Network_Test' `
     -ResourceGroupName $rg `
-    -TemplateFile 'json\cdn\cdn-waf.json' `
-    -TemplateParameterFile '.\json\cdn\cdn-waf.parameters.json' `
+    -TemplateFile 'json\compute\3single-vd.json' `
+    -TemplateParameterFile '.\json\compute\3single-vd.parameters.json' `
     -Verbose
     
 
