@@ -1,0 +1,15 @@
+docker search mysql
+docker pull mysql
+docker images
+docker images remove xxx
+docker container run -d -p 3002:80 ubuntu bash
+docker container ls -a 
+docker container prune
+docker container ps
+docker container stats
+docker container kill
+docker system df
+
+minikube start.
+kubectl create -f deployment.yml
+kubectl get pods
